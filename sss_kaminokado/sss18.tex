@@ -12,17 +12,17 @@
 \usepackage{sss}
 \usepackage{graphicsx} % for pdf, bitmapped graphics files
 \usepackage{epsfig} % for postscript graphics files
-
+\usepackage{amsmath}
 
 \begin{document}
 \date{}
 \title{\LARGE{\bf
-The 50th ISCIE International Symposium on Stochastic\\
-Systems Theory and Its Applications\\
+The 50th ISCIE International \\
+ Its Applications\\
 Instruction for Authors}
 }
 \author{
-Hirokazu Ohtagaki \\
+Shingo Kaminokado \\
 Dept. of Electrical and Electronic Systems, Okayama University of Science\\
 Ridai-cho 1-1, Kita-ku, Okayama, 700-0005 Japan\\
 \\E-mail: \texttt{xxx@sci-sss.org}
@@ -69,36 +69,88 @@ In order to assure a high-quality Proceedings, all manuscripts will be reviewed 
 only accepted ones will appear in the Proceedings.
 
 
-\section{Preparation of Exact Size Manuscripts}
+\section{カルマンフィルタの説明}
+この章では提案するカルマンフィルタのモデルを説明をする．
+本研究ではアイガモロボットを対象としており，このロボットは２次元平面上を移動する．カルマンフィルタの予測フェーズ
+\begin{align}
+     \hat{x}_{t+ \Delta t|t} &= F_{t} \hat{x}_{t} + B_{t} u_{t} \nonumber \\
+                             &= \hat{x}_{t} + B_{t} u_{t}
+     \label{eq:1}
+\end{align}
+%
+\begin{align}
+         \hat{P}_{t+ \Delta t|t} &= F_{t} P_{t|t} F_{t}^{T} + Q \nonumber \\
+                                 &= P_{t|t} + Q
+     \label{eq:2}
+\end{align}
+%
+%
+\begin{equation}
+    \begin{bmatrix}
+    \hat{x}_{t+ \Delta t|t} \\
+    \hat{y}_{t+ \Delta t|t} \\
+    \hat{\theta}_{t+ \Delta t|t}
+    \end{bmatrix} 
+    =
+    \begin{bmatrix}
+        \hat{x}_{t|t} \\
+        \hat{y}_{t|t} \\
+        \hat{\theta}_{t|t}
+    \end{bmatrix} 
+    +
+    \begin{bmatrix}
+        \Delta t cos\hat{\theta}_{t|t} &0 \\
+        \Delta t sin\hat{\theta}_{t|t} &0 \\
+        0                              &{\Delta}t
+    \end{bmatrix}
+    \label{eq:3} 
+\end{equation}
+%
+%
 
-Your paper must be prepared in actual size (i.e., exactly how it is to appear in the
-proceedings) with {\bf single spacing in two columns}.
-To ensure uniformity of appearance for the proceedings, the papers should conform to
-the following specifications.
-\begin{enumerate}
-\item[$\bullet$]
-The top margin of the first page, i.e. the distance from the top edge of the paper
-to the title, should be {\bf 30mm}.
-\item[$\bullet$]
-The top margins of the second, and the subsequent pages should be {\bf 26mm}.
-\item[$\bullet$]
-The text should be centered, and both the left and right margins should be {\bf 16mm}.
-\item[$\bullet$]
-The column width should be {\bf 84mm}.
-\item[$\bullet$]
-The space between the two columns is {\bf 10mm}.
-\item[$\bullet$]
-The bottom margins for all pages should be no less than {\bf 26mm}.
-\end{enumerate}
+\begin{equation}
+    \begin{bmatrix}
+    \hat{x}_{t+ \Delta t|t} \\
+    \hat{y}_{t+ \Delta t|t} \\
+    \hat{\theta}_{t+ \Delta t|t}
+    \end{bmatrix} 
+    =
+    \begin{bmatrix}
+        \hat{x}_{t|t} \\
+        \hat{y}_{t|t} \\
+        \hat{\theta}_{t|t}
+    \end{bmatrix} 
+    +
+    \begin{bmatrix}
+        \Delta t cos\hat{\theta}_{t|t} &0 \\
+        \Delta t sin\hat{\theta}_{t|t} &0 \\
+        0                              &{\Delta}t
+    \end{bmatrix}
+    \label{eq:3} 
+\end{equation}
 
-If your paper deviates significantly from these specifications, it may not be
-included in the proceedings. 
+% ¥begin{bmatrix}
+% a_{11} &a_{12} ¥¥
+% a_{21} &a_{22}+b_{12}
+% ¥end{bmatrix}
+% ¥end{equation}
+% \begin{equation}
+%     A = B
+%     \label{eq:3}
+% \end{equation}
+% \begin{equation}
+%     M_{c}  = \left[
+%        \begin{array}{rrrr}
+%          B & AB & A^{2}B & A^{3}B \\
+%        \end{array}
+%      \right].
+%    \label{eq:15}
+% \end{equation}
 
-
-\section{Manuscript Style}
+\section{カルマンフィルタに用いる分散の取得実験}
 
 Regarding the styles of your manuscript, please conform to the following 
-instructions. 
+%instructions. 
 
 \subsection{Title}
 The title should be centered across the top of the first page and should 
