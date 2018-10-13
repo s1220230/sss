@@ -1,0 +1,104 @@
+%
+% Style file for ISCIE International Symposium on 
+%            Stochastic Systems Theory and Its Applications
+%
+%
+%
+
+
+\twocolumn
+\pagestyle{empty}
+
+% hyphenation penalty
+\hyphenpenalty=80\relax 
+\exhyphenpenalty=80\relax 
+\sloppy
+
+% paper size for A4
+\textheight 245mm
+%\columnseprule 0pt
+\columnsep 10mm
+\textwidth 178mm
+\topmargin 0mm  
+\oddsidemargin -9mm  
+\evensidemargin \oddsidemargin
+\headheight 0pt  
+\headsep 0mm
+
+\footskip 0pt
+\parindent 8pt
+
+% font size
+\def\small{\@setfontsize{\small}{10}{12pt}}
+\def\footnotesize{\@setfontsize{\footnotesize}{9}{10.5pt}}
+\def\scriptsize{\@setfontsize{\scriptsize}{8}{9pt}}
+\def\tiny{\@setfontsize{\tiny}{6}{7pt}}
+\def\sublargesize{\@setfontsize{\sublargesize}{12}{14pt}}
+\def\large{\@setfontsize{\large}{12}{14pt}}
+\def\Large{\@setfontsize{\Large}{14}{17pt}}
+\def\LARGE{\@setfontsize{\LARGE}{17}{20pt}}
+\def\huge{\@setfontsize{\huge}{20}{24pt}}
+\def\Huge{\@setfontsize{\Huge}{24}{28pt}}
+
+% interline spacing
+\def\@normalsize{\@setsize\normalsize{10pt}\xpt\@xpt
+\abovedisplayskip 10pt plus2pt minus5pt\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip \z@ plus3pt\belowdisplayshortskip 6pt plus3pt
+minus3pt\let\@listi\@listI}
+
+%def. for section, subsection, subsubsection
+\def\section{\@startsection {section}{1}{\z@}{5ex plus 1ex minus 
+ .2ex}{1.5ex plus .2ex}{\large\centering\bf}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{2.5ex plus 1ex minus 
+ .2ex}{.01ex plus .2ex}{\bf}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{2.5ex plus 
+1ex minus .2ex}{1.5ex plus .2ex}{\bf}}
+
+%def. for eqnarray
+ \def\eqnarray{%
+     \stepcounter{equation}%
+     \def\@currentlabel{\p@equation\theequation}%
+     \m@th
+     \global\@eqnswtrue  \global\@eqcnt\z@
+     \tabskip\@centering \let\\\@eqncr
+     $$\everycr{}\halign to\displaywidth\bgroup
+         \hskip\@centering
+         $\displaystyle\tabskip\z@skip{##}$\@eqnsel
+        &\global\@eqcnt\@ne
+         \hskip \tw@\arraycolsep%%%%% optional space
+         \hfil$\displaystyle{{}##{}}$\hfil
+        &\global\@eqcnt\tw@
+         \hskip \tw@\arraycolsep%%%%% optional space
+         $\displaystyle{##}$\hfil\tabskip\@centering
+        &\global\@eqcnt\thr@@
+         \hbox to\z@\bgroup\hss##\egroup
+         \tabskip\z@skip
+        \cr}
+
+
+%figure and table caption 
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+
+%maketitle
+\def\@maketitle{%
+  \newpage
+  \null
+  \begin{center}
+  \let \footnote \thanks
+    \vskip -1mm
+    {\LARGE \bf 
+     \@title 
+     \par}
+    \vskip 6mm
+    {\large%\normalsize %\bf
+      \lineskip .5em%
+      \begin{tabular}[t]{c}
+        \@author
+      \end{tabular}      \par}
+    \vskip 1em
+   {\large \@date}
+  \end{center}
+  \par
+  \vskip 0.5em 
+}
