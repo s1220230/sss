@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.12.9)  13 OCT 2018 22:45
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.12.9)  13 OCT 2018 23:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -114,7 +114,10 @@ LaTeX Info: Redefining \[ on input line 2817.
 LaTeX Info: Redefining \] on input line 2818.
 ) (./sss18.aux
 
-LaTeX Warning: Label `eq:3' multiply defined.
+LaTeX Warning: Label `eq:4' multiply defined.
+
+
+LaTeX Warning: Label `eq:4' multiply defined.
 
 )
 \openout1 = `sss18.aux'.
@@ -158,15 +161,13 @@ LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
 ]
 
 LaTeX Font Warning: Font shape `JT1/mc/m/it' undefined
-(Font)              using `JT1/mc/m/n' instead on input line 215.
+(Font)              using `JT1/mc/m/n' instead on input line 225.
 
 
 LaTeX Font Warning: Font shape `JY1/mc/m/it' undefined
-(Font)              using `JY1/mc/m/n' instead on input line 215.
+(Font)              using `JY1/mc/m/n' instead on input line 225.
 
-[2
-
-] (./sss18.aux)
+[2] (./sss18.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -175,12 +176,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 1290 strings out of 493643
- 15672 string characters out of 6148757
- 86608 words of memory out of 5000000
- 4900 multiletter control sequences out of 15000+600000
+ 1291 strings out of 493643
+ 15678 string characters out of 6148757
+ 87608 words of memory out of 5000000
+ 4901 multiletter control sequences out of 15000+600000
  14673 words of font info for 61 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 27i,9n,20p,267b,315s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 27i,21n,20p,267b,315s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on sss18.dvi (2 pages, 9332 bytes).
+Output written on sss18.dvi (2 pages, 10204 bytes).

@@ -73,15 +73,16 @@ only accepted ones will appear in the Proceedings.
 この章では提案するカルマンフィルタのモデルを説明をする．
 本研究ではアイガモロボットを対象としており，このロボットは２次元平面上を移動する．カルマンフィルタの予測フェーズ
 \begin{align}
-     \hat{x}_{t+ \Delta t|t} &= F_{t} \hat{x}_{t} + B_{t} u_{t} \nonumber \\
-                             &= \hat{x}_{t} + B_{t} u_{t}
-     \label{eq:1}
+    \hat{x}_{t+ \Delta t|t} &= F_{t} \hat{x}_{t} + B_{t} u_{t} \nonumber \\
+                            &= \hat{x}_{t} + B_{t} u_{t}
+    \label{eq:1}
 \end{align}
+%
 %
 \begin{align}
-         \hat{P}_{t+ \Delta t|t} &= F_{t} P_{t|t} F_{t}^{T} + Q \nonumber \\
-                                 &= P_{t|t} + Q
-     \label{eq:2}
+    \hat{P}_{t+ \Delta t|t} &= F_{t} P_{t|t} F_{t}^{T} + Q \nonumber \\
+                            &= P_{t|t} + Q
+    \label{eq:2}
 \end{align}
 %
 %
@@ -103,49 +104,58 @@ only accepted ones will appear in the Proceedings.
         \Delta t sin\hat{\theta}_{t|t} &0 \\
         0                              &{\Delta}t
     \end{bmatrix}
+    \begin{bmatrix}
+        v_{t} \\
+        \omega_{t}
+    \end{bmatrix}
     \label{eq:3} 
+\end{equation}
+%
+%
+\begin{equation}
+    e_{t} = \hat{x}_{t} - x_{t} =
+    \begin{bmatrix}
+        \hat{x}_{t} - x_{t} \\
+        \hat{y}_{t} - y_{t} \\
+        \hat{\theta}_{t} - \theta_{t}
+    \end{bmatrix}
+    \label{eq:4}
 \end{equation}
 %
 %
 
 \begin{equation}
+    P_{t|t} = E
+    \begin{pmatrix}
+        e_{t} e_{t}^{T}
+    \end{pmatrix}
+    \label{eq:4}
+\end{equation}
+%
+%
+\begin{equation}
+    \begin{split}
     \begin{bmatrix}
-    \hat{x}_{t+ \Delta t|t} \\
-    \hat{y}_{t+ \Delta t|t} \\
-    \hat{\theta}_{t+ \Delta t|t}
-    \end{bmatrix} 
-    =
+    \sigma_{xx,t|t+\Delta t} &\sigma_{xy,t|t+\Delta t} &\sigma_{xz,t|t+\Delta t} \\
+    \sigma_{yx,t|t+\Delta t} &\sigma_{yy,t|t+\Delta t} &\sigma_{yz,t|t+\Delta t} \\
+    \sigma_{zx,t|t+\Delta t} &\sigma_{zy,t|t+\Delta t} &\sigma_{zz,t|t+\Delta t} 
+    \end{bmatrix} \\
+    = 
     \begin{bmatrix}
-        \hat{x}_{t|t} \\
-        \hat{y}_{t|t} \\
-        \hat{\theta}_{t|t}
+        \sigma_{xx,t|t} &\sigma_{xy,t|t} &\sigma_{xz,t|t} \\
+        \sigma_{yx,t|t} &\sigma_{yy,t|t} &\sigma_{yz,t|t} \\
+        \sigma_{zx,t|t} &\sigma_{zy,t|t} &\sigma_{zz,t|t}
     \end{bmatrix} 
     +
     \begin{bmatrix}
-        \Delta t cos\hat{\theta}_{t|t} &0 \\
-        \Delta t sin\hat{\theta}_{t|t} &0 \\
-        0                              &{\Delta}t
+        q_{x}^{2} &0         &0 \\
+        0         &q_{y}^{2} &0 \\
+        0         &0         &q_{\theta}^{2}
     \end{bmatrix}
-    \label{eq:3} 
+\end{split}
+    \label{eq:4} 
 \end{equation}
 
-% ¥begin{bmatrix}
-% a_{11} &a_{12} ¥¥
-% a_{21} &a_{22}+b_{12}
-% ¥end{bmatrix}
-% ¥end{equation}
-% \begin{equation}
-%     A = B
-%     \label{eq:3}
-% \end{equation}
-% \begin{equation}
-%     M_{c}  = \left[
-%        \begin{array}{rrrr}
-%          B & AB & A^{2}B & A^{3}B \\
-%        \end{array}
-%      \right].
-%    \label{eq:15}
-% \end{equation}
 
 \section{カルマンフィルタに用いる分散の取得実験}
 
