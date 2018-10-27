@@ -17,57 +17,51 @@
 \begin{document}
 \date{}
 \title{\LARGE{\bf
-The 50th ISCIE International \\
- Its Applications\\
-Instruction for Authors}
+Direction Control of Moving Vehicle using Dual RTK-GNSS and Kalman Filter}
 }
 \author{
 Shingo Kaminokado \\
-Dept. of Electrical and Electronic Systems, Okayama University of Science\\
-Ridai-cho 1-1, Kita-ku, Okayama, 700-0005 Japan\\
-\\E-mail: \texttt{xxx@sci-sss.org}
+Dept. of Computer Science and Engineering, The University of Aizu\\
+Turuga, Ikki-machi, Aizuwakamatsu City, Fukushima, 965-8580 \\
+\\E-mail: \texttt{m5211128@u-aizu.ac.jp}
 }
 
 \maketitle
 \thispagestyle{empty}
 %ABSTRACT
 \abstract{
-This document provides instructions for authors for preparing and submitting
-the manuscripts for the Proceedings of the 49th ISCIE International Symposium
-on Stochastic System Theory and Its Applications.
-This document (including this abstract) itself is an example of the desired layout
-for camera-ready papers.
-The guidelines detailed in this document will enable the Conference to maintain
-uniformity in the final proceedings and to avoid additional publication charges.
-To ensure high-quality proceedings, readability of your original manuscript is of
-paramount importance.
-Also, adherence to deadlines is critical because a great portion of the publication
-process is performed sequentially.  
+We have been investing a weeding robot. The robot estimates its position with 
+Global Navigation Satellite System(GNSS) but includes errors, which are around 
+a few meters, when it does single positioning. The direction of the robot deviates 
+a lot as it is based on location information. Hence by using the more accurate Real 
+Time Kinematic GNSS (RTK-GNSS), the positional accuracy improved. However, since 
+the direction of the robot was estimated from the difference with the position of 
+the previous robot, it was difficult to estimate the direction while posing. Therefore, 
+we presumed self-position with two single frequency RTK-GNSS receivers which become 
+to be available recently and are economically friendly. By setting the normal vector
+calculated from the left and right position information with two modules as 
+the direction of the robot, it made it possible to estimate the direction not 
+only while running but also posing. Moreover, we will tackle construction of position 
+estimation system with Kalman filter.
 }
 
 
 \section{Introduction}
-
-The manuscript for the Proceedings should be prepared in accordance with the present
-instructions.
-The Symposium Proceedings will be published at the on-line electronic journal cite 
-J-Stage (Japan Science and Technology Information Aggregator, Electronic). 
-Authors are requested to prepare the camera-ready manuscripts on {\bf A4} paper,
-written in English, in {\bf PDF} format.
-The size of the electronic file should not exceed {\bf 5MB}.
-
-The manuscript should not exceed {\bf 10 pages} (6 pages are recommended) including
-figures, tables, photos, references and appendices.
-The author who wishes to write the manuscript more than 10 pages or more than 5MB
-memory should contact with the SSS'17 Steering Committee for permission.
- 
-On A4 paper, the Conference requires a font size of {\bf 10 points or greater}.
-Some technical formatting programs print mathematical formulas in italic type, with
-subscripts and superscripts in a slightly smaller font size. 
-
-In order to assure a high-quality Proceedings, all manuscripts will be reviewed and
-only accepted ones will appear in the Proceedings.
-
+Our research group has been developed a small weeding robot\cite{aigamo}. This robot weeds automatically in paddy fields.
+It is important for the robot to know the self-position because it moves in a vast environment. To know the self-position, 
+some researchers use camera\cite{camera-relate} or beacon\cite{beacon-relate}. 
+However, these devices easily affected by disturbance such as weather, so it is difficult to apply to our robot.
+Therefore, we adopt Global Navigation Satellite System(GNSS) to obtain self-position of the robot.
+Conventionally, robots obtain self-position by single-positioning method.
+However, position errors and orientation errors are greatly increase.
+Therefore, we adopt Real Time Kinematic-GNSS (RTK-GNSS) for higher accuracy.
+GNSS modules mainly receive two kinds of carries.
+Dual frequency receivers are expensive and large, so we can not mount our robot.
+On the other hand, the number of satellites has increased by multi-GNSS technology in recent years. As a result, cheap and compact modules that can acquire one frequency carrier have been on the market.
+Therefore, we adopt these modules.
+We installed two modules on the both side of the robot because it is difficult to estimate the orientation of the robot using only one module.
+In this research, we propose a more accurate self-localization system by introducing the Kalman filter into our positioning system.
+We verify our proposed method by Matlab.
 
 \section{カルマンフィルタの説明}
 この章では提案するカルマンフィルタのモデルを説明をする．
@@ -163,69 +157,71 @@ Regarding the styles of your manuscript, please conform to the following
 %instructions. 
 
 \subsection{Title}
-The title should be centered across the top of the first page and should 
-be in a distinctive point size or font.
-
 \subsection{Author's Names and Address}
-The authors' names and addresses should be centered below the title.
-It is desirable that these lines are typed in at least eleven point font size,
-but the particular point sizes and fonts are not critical and are left to the
-direction of the authors.
-Times new Roman 12 point is suggested.
-Please include your E-Mail address. 
-
 \subsection{Headings}
-Main headings are to be column centered in a bold font without an underline.
-They may be numbered, if so desired. 
-
-Subheadings should be in a bold font or underlined lowercase with initial
-capitals.
-They should start at the left-hand margin on a separate line.
-
-Sub-subheadings are to be in a bold font or underlined type.
-They should be indented and run in at the beginning of the paragraph.
-
 \subsection{Figures and Tables} 
-Figures and photos should be consecutively numbered like Fig{.}~1, Fig{.}~2,
-Figures should be inserted near their citation or at the end of the manuscript.
-Large figures and tables may span across both columns if necessary.
-Figure captions should be placed below the figures. 
+
 
 \subsection{References}
-List and number all references at the end of the paper as shown below.
-Number reference citations consecutively in square brackets [1].
+
 
 \subsection{Page Numbers}
-Do not write page numbers on your manuscript.
-These will be inserted later by the proceedings printer together with
-the session number and conference identifications.
 
 
-\section{Manuscript Submission}
-Authors are requested to send their manuscripts electronically by
-{\bf July 31, 2018} on the web:
-\begin{center}
-http://sci-sss.org/sss2018/sub/submission.php
-\end{center}
+
+\section{Simulation using Kalman filter}
+%先行研究より、我々の測位システムの位置と向きの分散共分散行列を算出した．
+%これを用いてDual RTK-GNSSにおけるカルマンフィルターの優位性についてシミュレーションする．
+%
+%
+%
+%
+%
+%
+
+\subsection{Result}
+\begin{figure}
+\centerline{\epsfig{file=process_noise_S.eps,width=100mm}}
+\caption{Large Process noise}
+\centerline{\epsfig{file=process_noise_M.eps,width=100mm}}
+\caption{Middle Process noise}
+\centerline{\epsfig{file=process_noise_L.eps,width=100mm}}
+\caption{Small process noise}
+\end{figure}
+\subsection{Disucussion}
 
 
 \section{Conclusions}
 
-Please make an extra effort to adhere to these guidelines as the quality
-of the publications depends on you.
-Thank you for your cooperation and contribution.
-We are looking forward to seeing you at the 49th ISCIE International Symposium
-on Stochastic Systems Theory and Its Applications (SSS'17).
-
-
 \begin{thebibliography}{99}
-\bibitem{foo}
-R. E. Kalman and R. S. Bucy: 
-New Results in linear filtering and prediction, 
-{\it Trans. ASME, J. Basic Eng.}, 82 D, pp.95-108, 1960.
-\bibitem{bar}
-A. H. Jazwinsky: 
-{\it Stochastic Process and Filtering Theory}, Academic Press, N.Y., 1970.
+\bibitem{aigamo}
+M. Taku, O. Yoshiaki, O. Jun, N. Keita and N. Keitaro:
+Mechanism of generating drawbar pull of rod wheel on loose soil,
+{\it 22rd International Symposium on Artificial Life and Robotics.(AROB)}, Vol.22, No.4, 2017.
+\bibitem{camera-relate}
+S.Shotaro, H. Zhencheng and F. Thomas:
+Tracking ofFeatUre PointsforVisualSLAM with MultipleCameras
+{\it The Institude of Image Information and Television Engineers}
+\bibitem{beacon-relate}
+Z. Fang, L. Deng, Y. Ou and X. Wu:
+A tracking robot based on wireless beacon
+{\it International Conference on Intelligent Robotics and Applications}, pp.191-202, 2010.
+\bibitem{gnss}
+H. J. Christopher and C. Eric:
+Evolution of the global navigation satellitesystem (gnss),
+{\it Proceedings of the IEEE}, Vol.96, No.12, pp.1902-1917, 2008.
+\bibitem{rtk-gps}
+K. Michio. N. Noboru, I. Kazunobu and T. Hideo: 
+Field Mobile Robot navigated by RTK-GPS and FOG, 
+{\it Journal of the Japanese Society of Agricultural Machinery}, Vol.63, No.5, pp.74-79, 2001.(in Japanese)
+\bibitem{auto-weeding}
+S. Masahiro, N. Yoshisada, T. Katsuhiko and K. Kyou: 
+{\it Journal of the Japanese Society of Agricultural Machinery}, Vol.72, No.3, pp.276-282, 2010.(in Japanese)
+\bibitem{reach rs} 
+Emlid Reach RS, https://docs.emlid.com/eachrs/
+
+\bibitem{reach} 
+Emlid Reach, https://docs.emlid.com/each/
 \end{thebibliography}
 \end{document}
 
