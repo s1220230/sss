@@ -20,7 +20,7 @@
 Direction Control of Moving Vehicle using Dual RTK-GNSS and Kalman Filter}
 }
 \author{
-Shingo Kaminokado \\
+Shingo Kaminokado, Jun Ogawa, Keita Nakamura, Keitaro Naruse \\
 Dept. of Computer Science and Engineering, The University of Aizu\\
 Turuga, Ikki-machi, Aizuwakamatsu City, Fukushima, 965-8580 \\
 \\E-mail: \texttt{m5211128@u-aizu.ac.jp}
@@ -63,6 +63,12 @@ We installed two modules on the both side of the robot because it is difficult t
 In this research, we propose a more accurate self-localization system by introducing the Kalman filter into our positioning system.
 We verify our proposed method by Matlab.
 
+\begin{figure}
+    \vspace{5mm}
+    \centerline{\epsfig{file=./figure/aigamo_robot_model.eps,width=50mm}}
+    \caption{Robot model}
+\end{figure}
+
 \section{カルマンフィルタの説明}
 この章では提案するカルマンフィルタのモデルを説明をする．
 本研究ではアイガモロボットを対象としており，このロボットは２次元平面上を移動する．カルマンフィルタの予測フェーズ
@@ -74,7 +80,7 @@ We verify our proposed method by Matlab.
 %
 %
 \begin{align}
-    \hat{P}_{t+ \Delta t|t} &= F_{t} P_{t|t} F_{t}^{T} + Q \nonumber \\
+    P_{t+ \Delta t|t} &= F_{t} P_{t|t} F_{t}^{T} + Q \nonumber \\
                             &= P_{t|t} + Q
     \label{eq:2}
 \end{align}
@@ -150,48 +156,112 @@ We verify our proposed method by Matlab.
     \label{eq:6} 
 \end{equation}
 
+カルマンフィルタの更新フェーズ
+\begin{equation}
+    y_{t} = z_{t} - H_{t}\hat{x}_{t+\Delta t|t}
+    \label{eq:7}
+\end{equation}
+%
+%
+\begin{equation}
+    S_{t} = R + H_{t}P_{t+\Delta t|t}H_{t}^{T}
+    \label{eq:8}
+\end{equation}
+%
+%
+\begin{equation}
+    \hat{x}_{t+\Delta t|t+\Delta t} = x_{t+\Delta t|t+\Delta t}
+    \label{eq:9}
+\end{equation}
+
 
 \section{カルマンフィルタに用いる分散の取得実験}
-
-Regarding the styles of your manuscript, please conform to the following 
-%instructions. 
-
-\subsection{Title}
-\subsection{Author's Names and Address}
-\subsection{Headings}
-\subsection{Figures and Tables} 
-
-
-\subsection{References}
-
-
-\subsection{Page Numbers}
-
+%
+%
+%
+%
+%
 
 
 \section{Simulation using Kalman filter}
 %先行研究より、我々の測位システムの位置と向きの分散共分散行列を算出した．
-%これを用いてDual RTK-GNSSにおけるカルマンフィルターの優位性についてシミュレーションする．
+%これを用いてDual RTK-GNSSにおけるカルマンフィルタの優位性についてシミュレーションする．
+%
+%ロボットの左車輪は0.2m/s, 右車輪は0.3m/sの速度で反時計周りのシーケンス動作
+%車輪には路面状況を考慮して大中小のプロセスノイズを与える．
+%アイガモロボットの走行する路面はプロセスノイズ大を想定している．
+%車輪間距離0.35m, ロボットの制御0.01s/回(100Hz), GPSの更新0.2s/回(5Hz)
 %
 %
 %
-%
-%
-%
+
+\begin{table}[h]
+    \caption{Parameters for simulation}
+    \label{table:table1}
+    \centering
+    \begin{tabular}{ll}
+        \hline
+        Parameter & Value \\
+        \hline \hline
+        車輪間距離 \(B\) & \(0.35[m]\) \\
+        左車輪速度 \(v_L\) & \(0.2 [m/s]\) \\
+        右車輪速度 \(v_R\) & \(0.3 [m/s]\) \\
+        ロボットの制御周波数 & \(100 [Hz]\) \\
+        GNSSの更新周波数 & \(5 [Hz]\) \\
+       \hline
+    \end{tabular}
+\end{table}
+
+% \begin{table}[h]
+%     \caption{車輪外乱}
+%     \label{table:table2}
+%     \centering
+%     \begin{tabular}{ll}
+%         \hline
+%         外乱の大きさ & 分散共分散行列 \\
+%         \hline \hline
+%         small & 
+%         \begin{equation} 
+%             Q = 
+%             \begin{bmatrix}
+%             0.1^2 &0 \\
+%             0     &0.1^2 
+%             \end{bmatrix}
+%         \end{equation} \\
+%         %\hline
+%         %middle & \(0.2 [m/s]\) \\
+%         %large & \(0.3 [m/s]\) \\
+%        \hline
+%     \end{tabular}
+% \end{table}
 
 \subsection{Result}
+%車輪外乱大中小の時のシミュレーション結果をFiure 1~3にそれぞれ示した．
+%
+%
+%
 \begin{figure}
 \centerline{\epsfig{file=./figure/process_noise_S.eps,width=100mm}}
-\caption{Large Process noise}
-\centerline{\epsfig{file=./figure/process_noise_M.eps,width=100mm}}
-\caption{Middle Process noise}
-\centerline{\epsfig{file=./figure/process_noise_L.eps,width=100mm}}
 \caption{Small process noise}
+\centerline{\epsfig{file=./figure/process_noise_M.eps,width=100mm}}
+\caption{Middle process noise}
+\centerline{\epsfig{file=./figure/process_noise_L.eps,width=100mm}}
+\caption{Large process noise}
 \end{figure}
 \subsection{Disucussion}
-
+%
+%
+%
+%
+%
 
 \section{Conclusions}
+%
+%
+%
+%
+%
+%
 
 \begin{thebibliography}{99}
 \bibitem{aigamo}
