@@ -13,6 +13,7 @@
 \usepackage{graphicsx} % for pdf, bitmapped graphics files
 \usepackage{epsfig} % for postscript graphics files
 \usepackage{amsmath}
+\usepackage{here}
 
 \begin{document}
 \date{}
@@ -55,23 +56,26 @@ Therefore, we adopt Global Navigation Satellite System(GNSS) to obtain self-posi
 Conventionally, robots obtain self-position by single-positioning method.
 However, position errors and orientation errors are greatly increase.
 Therefore, we adopt Real Time Kinematic-GNSS (RTK-GNSS) for higher accuracy.
+
 GNSS modules mainly receive two kinds of carries.
 Dual frequency receivers are expensive and large, so we can not mount our robot.
-On the other hand, the number of satellites has increased by multi-GNSS technology in recent years. As a result, cheap and compact modules that can acquire one frequency carrier have been on the market.
+On the other hand, the number of satellites has increased by multi-GNSS technology in recent years. 
+As a result, cheap and compact modules that can acquire one frequency carrier have been on the market.
 Therefore, we adopt these modules.
 We installed two modules on the both side of the robot because it is difficult to estimate the orientation of the robot using only one module.
 In this research, we propose a more accurate self-localization system by introducing the Kalman filter into our positioning system.
 We verify our proposed method by Matlab.
 
-\begin{figure}
+\begin{figure}[H]
     \vspace{5mm}
     \centerline{\epsfig{file=./figure/aigamo_robot_model.eps,width=50mm}}
     \caption{Robot model}
 \end{figure}
 
-\section{カルマンフィルタの説明}
+\section{Kalman filter}
 この章では提案するカルマンフィルタのモデルを説明をする．
-本研究ではアイガモロボットを対象としており，このロボットは２次元平面上を移動する．カルマンフィルタの予測フェーズ
+本研究ではアイガモロボットを対象としており，このロボットは２次元平面上を移動する． \\
+カルマンフィルタの予測フェーズ
 \begin{align}
     \hat{x}_{t+ \Delta t|t} &= F_{t} \hat{x}_{t} + B_{t} u_{t} \nonumber \\
                             &= \hat{x}_{t} + B_{t} u_{t}
@@ -136,15 +140,15 @@ We verify our proposed method by Matlab.
 \begin{equation}
     \begin{split}
     \begin{bmatrix}
-    \sigma_{xx,t|t+\Delta t} &\sigma_{xy,t|t+\Delta t} &\sigma_{xz,t|t+\Delta t} \\
-    \sigma_{yx,t|t+\Delta t} &\sigma_{yy,t|t+\Delta t} &\sigma_{yz,t|t+\Delta t} \\
-    \sigma_{zx,t|t+\Delta t} &\sigma_{zy,t|t+\Delta t} &\sigma_{zz,t|t+\Delta t} 
+    \sigma_{xx,t|t+\Delta t} &\sigma_{xy,t|t+\Delta t} &\sigma_{x\theta,t|t+\Delta t} \\
+    \sigma_{yx,t|t+\Delta t} &\sigma_{yy,t|t+\Delta t} &\sigma_{y\theta,t|t+\Delta t} \\
+    \sigma_{\theta x,t|t+\Delta t} &\sigma_{\theta y,t|t+\Delta t} &\sigma_{\theta\theta,t|t+\Delta t} 
     \end{bmatrix} \\
     = 
     \begin{bmatrix}
-        \sigma_{xx,t|t} &\sigma_{xy,t|t} &\sigma_{xz,t|t} \\
-        \sigma_{yx,t|t} &\sigma_{yy,t|t} &\sigma_{yz,t|t} \\
-        \sigma_{zx,t|t} &\sigma_{zy,t|t} &\sigma_{zz,t|t}
+        \sigma_{xx,t|t} &\sigma_{xy,t|t} &\sigma_{x\theta,t|t} \\
+        \sigma_{yx,t|t} &\sigma_{yy,t|t} &\sigma_{y\theta,t|t} \\
+        \sigma_{\theta x,t|t} &\sigma_{\theta y,t|t} &\sigma_{\theta\theta,t|t}
     \end{bmatrix} 
     +
     \begin{bmatrix}
@@ -175,18 +179,111 @@ We verify our proposed method by Matlab.
 \end{equation}
 
 
-\section{カルマンフィルタに用いる分散の取得実験}
-%
-%
-%
-%
-%
+\section{Experiments on acquisition of covariance matrix for Kalman filter}
+%先行研究においてカルマンフィルタに用いる誤差分布を調査した．
+We investigated the error distribution used for the Kalman filter in the previous study.
+\subsection{Experimental device}
+%RTK-GNSSには，最低でも基地局と移動局の2つGNSSモジュールが必要だが，
+%本研究では，基地局にEmlid社のReach RS[2]を1台と移動局にEmlid社のReach[3]を2台用いる.
+%基準局は図1に示すように，見晴らしの良い四等三角点の地上高1.5m地点に設置する.
+%移動局は，GNSSモジュールをロボットの左右に設置することを想定して，
+%図2に示すような実験装置を用いる.基準局と移動局のアンテナの下には，
+%地面からのマルチパスを防ぐため10cm×10cmのアルミプレートを敷く.
+RTK-GNSS requires at least GNSS modules, base station and rover. 
+In this experiment, we use one Reach RS\cite{reach rs} from Emlid as a base station 
+and two Reach\cite{reach} from Emlid as a rover.
+As shown in Figure 2, the base station is installed at a position of 1.5m above the ground 
+with a quaint triangle with a clear view.
+Rover uses an experimental apparatus as shown in Figure 3. 
+Under the antennas of the base station and the mobile station, 
+an aluminum plate of 10 cm x 10 cm is laid down to prevent multipass from the ground.
 
+\begin{figure}[H]
+    \centerline{\epsfig{file=./figure/fig1.eps,width=50mm,angle=-90}}
+    \caption{Small process noise}
+    \centerline{\epsfig{file=./figure/fig2.eps,width=50mm}}
+    \caption{Small process noise}
+\end{figure}
+
+\subsection{Investigation method}
+%先行研究では，移動局に2つのモジュールを用いた場合の位置誤差，向きの誤差，
+%モジュール間距離の影響，方位による影響を調べるために以下のデータセットを測定した.
+In the previous study, the following data set was measured in order to 
+investigate the position error, the orientation error, 
+the influence of the module distance and orientation, when two modules were used for a rover.
+\begin{enumerate}
+    \renewcommand{\labelenumi}{(\roman{enumi})}
+    \item Ground height 30cm/Distance between modules 20cm
+    \item Ground height 30cm/Distance between modules 30cm
+    \item Ground height 30cm/Distance between modules 40cm
+    \item Ground height 150cm/Distance between modules 20cm
+    \item Ground height 150cm/Distance between modules 30cm
+    \item Ground height 150cm/Distance between modules 40cm
+\end{enumerate}
+
+%一番実環境に近い(ⅱ)の結果を図4と5に示す．
+Figures 4 and 5 show the results of (ii) which is closest to the real environment.
+
+\begin{figure}[H]
+    \centerline{\epsfig{file=./figure/30dis_30hight.eps,width=70mm}}
+    \caption{aaa}
+    \centerline{\epsfig{file=./figure/30dis_30hight_vector.eps,width=70mm}}
+    \caption{aaa}
+\end{figure}
+
+%これより得られた誤差データより分散共分散行列を算出する．
+%位置のみの多変量正規分布を図6に示す
+A variance covariance matrix is ​​calculated from the error data obtained from this experiment. 
+The multivariate normal distribution of only the position is shown in figure 6.
+\begin{figure}[H]
+    \centerline{\epsfig{file=./figure/fig13.eps,width=70mm}}
+    \caption{aaa}
+\end{figure}
+
+%ロボットの向きも加えた平均と分散共分散行列を式10,11に示す．
+The mean and variance covariance matrix with the orientation of the robot 
+also added are shown in equations 10 and 11.
+
+\begin{equation}
+    \begin{split}
+     \mu = 
+     \begin{bmatrix}
+        \mu_x \\
+        \mu_y \\
+        \mu_\theta
+     \end{bmatrix}
+     =
+     \begin{bmatrix}
+        0.0523096875 \\
+        -0.0315079375 \\
+        -0.0287904375
+     \end{bmatrix}
+    \end{split}
+    \label{eq:10} 
+\end{equation}
+
+\begin{equation}
+    \begin{split}
+    R = 
+    \begin{bmatrix}
+        \sigma_{xx} &\sigma_{xy} &\sigma_{x\theta} \\
+        \sigma_{yx} &\sigma_{yy} &\sigma_{y\theta} \\
+        \sigma_{\theta x} &\sigma_{\theta y} &\sigma_{\theta\theta}
+    \end{bmatrix} \\
+    = 
+    \begin{bmatrix}
+        0.0000041093 & -0.0000001684 & -0.0000053749 \\
+        -0.0000001684 & 0.0000058535 & 0.0000322863 \\
+        -0.0000053749 & 0.0000322863 & 0.0003444646 
+    \end{bmatrix} 
+    \end{split}
+    \label{eq:11} 
+\end{equation}
 
 \section{Simulation using Kalman filter}
-%先行研究より、我々の測位システムの位置と向きの分散共分散行列を算出した．
+%先行研究より、我々の測位システムの位置と向きの分散共分散行列を算出した．(10と11)
 %これを用いてDual RTK-GNSSにおけるカルマンフィルタの優位性についてシミュレーションする．
-%
+%シミュレーションに用いる各パラメータは表1に示す．
 %ロボットの左車輪は0.2m/s, 右車輪は0.3m/sの速度で反時計周りのシーケンス動作
 %車輪には路面状況を考慮して大中小のプロセスノイズを与える．
 %アイガモロボットの走行する路面はプロセスノイズ大を想定している．
@@ -195,7 +292,7 @@ We verify our proposed method by Matlab.
 %
 %
 
-\begin{table}[h]
+\begin{table}[H]
     \caption{Parameters for simulation}
     \label{table:table1}
     \centering
@@ -203,11 +300,11 @@ We verify our proposed method by Matlab.
         \hline
         Parameter & Value \\
         \hline \hline
-        車輪間距離 \(B\) & \(0.35[m]\) \\
-        左車輪速度 \(v_L\) & \(0.2 [m/s]\) \\
-        右車輪速度 \(v_R\) & \(0.3 [m/s]\) \\
-        ロボットの制御周波数 & \(100 [Hz]\) \\
-        GNSSの更新周波数 & \(5 [Hz]\) \\
+        Wheel distance \(B\) & \(0.35[m]\) \\
+        Left wheel speed \(v_L\) & \(0.2 [m/s]\) \\
+        Right wheel speed \(v_R\) & \(0.3 [m/s]\) \\
+        Robot control frequency & \(100 [Hz]\) \\
+        Update frequency of GNSS & \(5 [Hz]\) \\
        \hline
     \end{tabular}
 \end{table}
@@ -240,7 +337,7 @@ We verify our proposed method by Matlab.
 %
 %
 %
-\begin{figure}
+\begin{figure}[H]
 \centerline{\epsfig{file=./figure/process_noise_S.eps,width=100mm}}
 \caption{Small process noise}
 \centerline{\epsfig{file=./figure/process_noise_M.eps,width=100mm}}
