@@ -52,7 +52,7 @@ Our research group has been developed a small weeding robot\cite{aigamo}. This r
 It is important for the robot to know the self-position because it moves in a vast environment. To know the self-position, 
 some researchers use camera\cite{camera-relate} or beacon\cite{beacon-relate}. 
 However, these devices easily affected by disturbance such as weather, so it is difficult to apply to our robot.
-Therefore, we adopt Global Navigation Satellite System(GNSS) to obtain self-position of the robot.
+Therefore, we adopt Global Navigation Satellite System(GNSS) to obtain self-position of the robot\cite{gnss}.
 Conventionally, robots obtain self-position by single-positioning method.
 However, position errors and orientation errors are greatly increase.
 Therefore, we adopt Real Time Kinematic-GNSS (RTK-GNSS) for higher accuracy.
@@ -62,7 +62,7 @@ Dual frequency receivers are expensive and large, so we can not mount our robot.
 On the other hand, the number of satellites has increased by multi-GNSS technology in recent years. 
 As a result, cheap and compact modules that can acquire one frequency carrier have been on the market.
 Therefore, we adopt these modules.
-We installed two modules on the both side of the robot because it is difficult to estimate the orientation of the robot using only one module.
+We installed two modules on the both side of the robot because it is difficult to estimate the orientation of the robot using only one module\cite{rtk-gnss}\cite{auto-weeding}.
 In this research, we propose a more accurate self-localization system by introducing the Kalman filter into our positioning system.
 We verify our proposed method by Matlab.
 
@@ -72,119 +72,86 @@ We verify our proposed method by Matlab.
     \caption{Robot model}
 \end{figure}
 
-\section{Kalman filter}
-この章では提案するカルマンフィルタのモデルを説明をする．
-本研究ではアイガモロボットを対象としており，このロボットは２次元平面上を移動する． \\
-カルマンフィルタの予測フェーズ
-\begin{align}
-    \hat{x}_{t+ \Delta t|t} &= F_{t} \hat{x}_{t} + B_{t} u_{t} \nonumber \\
-                            &= \hat{x}_{t} + B_{t} u_{t}
-    \label{eq:1}
-\end{align}
-%
-%
-\begin{align}
-    P_{t+ \Delta t|t} &= F_{t} P_{t|t} F_{t}^{T} + Q \nonumber \\
-                            &= P_{t|t} + Q
-    \label{eq:2}
-\end{align}
-%
-%
+\section{カルマンフィルタの説明}
+この章ではカルマンフィルタの説明を行う．アイガモロボットは２次元平面上を移動する．ロボットの中心座標を$(x,y)$, $x$軸となす角を$\theta$とする．ロボットの状態ベクトル$x$は式１と表現される．
 \begin{equation}
-    \begin{bmatrix}
-    \hat{x}_{t+ \Delta t|t} \\
-    \hat{y}_{t+ \Delta t|t} \\
-    \hat{\theta}_{t+ \Delta t|t}
-    \end{bmatrix} 
-    =
-    \begin{bmatrix}
-        \hat{x}_{t|t} \\
-        \hat{y}_{t|t} \\
-        \hat{\theta}_{t|t}
-    \end{bmatrix} 
-    +
-    \begin{bmatrix}
-        \Delta t cos\hat{\theta}_{t|t} &0 \\
-        \Delta t sin\hat{\theta}_{t|t} &0 \\
-        0                              &{\Delta}t
-    \end{bmatrix}
-    \begin{bmatrix}
-        v_{t} \\
-        \omega_{t}
-    \end{bmatrix}
-    \label{eq:3} 
+    x = \begin{bmatrix}
+        x \\
+        y \\
+        \theta
+        \end{bmatrix} 
+\end{equation}
+ロボットは左右の速度$v_{L}$,$v_{R}$によって制御され，制御ベクトル$u$は式２と表現される．
+\begin{equation}
+    u = \begin{bmatrix}
+        v_{L} \\
+        v_{R} 
+        \end{bmatrix} 
 \end{equation}
 %
 %
+カルマンフィルタの一般式からロボットの推定位置は式３のように表現される
 \begin{equation}
-    e_{t} = \hat{x}_{t} - x_{t} =
-    \begin{bmatrix}
-        \hat{x}_{t} - x_{t} \\
-        \hat{y}_{t} - y_{t} \\
-        \hat{\theta}_{t} - \theta_{t}
-    \end{bmatrix}
+    \hat{x}_{t} =F\hat{x}_{t-1} + Bu_{t} + w_{t}
+\end{equation}
+where, $F = \begin{bmatrix} 1 & 0 & 0 \\  0 & 1 & 0 \\  0 & 0 & 1 \end{bmatrix}$,
+$B = \begin{bmatrix} dt * cos\theta & 0 \\  dt * sin\theta & 0 \\ 0 & 1 \end{bmatrix}$, 
+$w$ is process noise.\\
+%
+%
+また，誤差共分散行列の更新は式４のように表現される
+\begin{equation}
+    P_{t} = F P_{t-1} F^{T} + Q
     \label{eq:4}
 \end{equation}
+ただし，Pは誤差共分散行列を表している. Qはプロセスの共分散行列で，\\ \\$Q = \begin{bmatrix} q_{x}^{2} & 0 & 0 \\  0 & q_{y}^{2} & 0 \\  0 & 0 & q_{\theta}^{2} \end{bmatrix}$\\ \\
 %
 %
-
+GPSよるロボットの位置$z$は式５のように表現される
 \begin{equation}
-    P_{t|t} = E
-    \begin{pmatrix}
-        e_{t} e_{t}^{T}
-    \end{pmatrix}
+    z_{t} = Hx_{t} + v_{t}
     \label{eq:5}
 \end{equation}
-%
-%
+where，$H = \begin{bmatrix} 1 & 0 & 0 \\  0 & 1 & 0 \\  0 & 0 & 1 \end{bmatrix}$, 
+$v$ is observation noise. \\ \\
+カルマンフィルタの更新フェーズでは式6−10の式で観測誤差共分散行列$S$の更新，カルマンゲイン$K$の修正，推定状態量$\hat{x}$の更新を行う．
 \begin{equation}
-    \begin{split}
-    \begin{bmatrix}
-    \sigma_{xx,t|t+\Delta t} &\sigma_{xy,t|t+\Delta t} &\sigma_{x\theta,t|t+\Delta t} \\
-    \sigma_{yx,t|t+\Delta t} &\sigma_{yy,t|t+\Delta t} &\sigma_{y\theta,t|t+\Delta t} \\
-    \sigma_{\theta x,t|t+\Delta t} &\sigma_{\theta y,t|t+\Delta t} &\sigma_{\theta\theta,t|t+\Delta t} 
-    \end{bmatrix} \\
-    = 
-    \begin{bmatrix}
-        \sigma_{xx,t|t} &\sigma_{xy,t|t} &\sigma_{x\theta,t|t} \\
-        \sigma_{yx,t|t} &\sigma_{yy,t|t} &\sigma_{y\theta,t|t} \\
-        \sigma_{\theta x,t|t} &\sigma_{\theta y,t|t} &\sigma_{\theta\theta,t|t}
-    \end{bmatrix} 
-    +
-    \begin{bmatrix}
-        q_{x}^{2} &0         &0 \\
-        0         &q_{y}^{2} &0 \\
-        0         &0         &q_{\theta}^{2}
-    \end{bmatrix}
-\end{split}
-    \label{eq:6} 
+    y_{t} = z_{t} - H\hat{x}_{t}
+    \label{eq:6}
 \end{equation}
-
-カルマンフィルタの更新フェーズ
+%
+%
 \begin{equation}
-    y_{t} = z_{t} - H_{t}\hat{x}_{t+\Delta t|t}
+    S_{t} = R + HP_{t}H^{T}
     \label{eq:7}
 \end{equation}
 %
 %
 \begin{equation}
-    S_{t} = R + H_{t}P_{t+\Delta t|t}H_{t}^{T}
+K_{t} = P_{t}H^{T}S_{t}^{-1}
     \label{eq:8}
 \end{equation}
-%
-%
 \begin{equation}
-    \hat{x}_{t+\Delta t|t+\Delta t} = x_{t+\Delta t|t+\Delta t}
-    \label{eq:9}
+    \hat{x}_{t} = \hat{x}_{t}+K_{t}y_{t}
+    \label{eq:8}
 \end{equation}
 
+\begin{equation}
+    P_{t} = (I-K_{t}H^{T})P_{t}(I-K_{t}H^{T})^{T} + K_{t}RK_{t}^{T}
+    \label{eq:9}
+\end{equation}
+%
+ただし，Rは観測の共分散行列で，$R = \begin{bmatrix} x_{x}^{2} & 0 & 0 \\  0 & x_{y}^{2} & 0 \\  0 & 0 & x_{\theta}^{2} \end{bmatrix}$\\
 
-\section{Experiments on acquisition of covariance matrix for Kalman filter}
+
+
+\section{Pre experiments}
+%Experiments on acquisition of covariance matrix for Kalman filter
 %先行研究においてカルマンフィルタに用いる誤差分布を調査した．
 We investigated the error distribution used for the Kalman filter in the previous study.
 \subsection{Experimental device}
 %RTK-GNSSには，最低でも基地局と移動局の2つGNSSモジュールが必要だが，
-%本研究では，基地局にEmlid社のReach RS[2]を1台と移動局にEmlid社のReach[3]を2台用いる.
+%本実験では，基地局にEmlid社のReach RS[2]を1台と移動局にEmlid社のReach[3]を2台用いる.
 %基準局は図1に示すように，見晴らしの良い四等三角点の地上高1.5m地点に設置する.
 %移動局は，GNSSモジュールをロボットの左右に設置することを想定して，
 %図2に示すような実験装置を用いる.基準局と移動局のアンテナの下には，
@@ -200,17 +167,21 @@ an aluminum plate of 10 cm x 10 cm is laid down to prevent multipass from the gr
 
 \begin{figure}[H]
     \centerline{\epsfig{file=./figure/fig1.eps,width=50mm,angle=-90}}
-    \caption{Small process noise}
+    \caption{Base Environment}
+\end{figure}
+\begin{figure}[H]
     \centerline{\epsfig{file=./figure/fig2.eps,width=50mm}}
-    \caption{Small process noise}
+    \caption{Rover}
 \end{figure}
 
 \subsection{Investigation method}
 %先行研究では，移動局に2つのモジュールを用いた場合の位置誤差，向きの誤差，
 %モジュール間距離の影響，方位による影響を調べるために以下のデータセットを測定した.
+%それぞれのデータセットは周波数5Hzで20秒間(100データ)を45度刻みに8方位取得する．
 In the previous study, the following data set was measured in order to 
 investigate the position error, the orientation error, 
 the influence of the module distance and orientation, when two modules were used for a rover.
+Each data set acquires 8 azimuths at a frequency of 5 Hz (100 data) in increments of 45 degrees.
 \begin{enumerate}
     \renewcommand{\labelenumi}{(\roman{enumi})}
     \item Ground height 30cm/Distance between modules 20cm
@@ -221,14 +192,17 @@ the influence of the module distance and orientation, when two modules were used
     \item Ground height 150cm/Distance between modules 40cm
 \end{enumerate}
 
+\subsection{Result}
 %一番実環境に近い(ⅱ)の結果を図4と5に示す．
 Figures 4 and 5 show the results of (ii) which is closest to the real environment.
 
 \begin{figure}[H]
     \centerline{\epsfig{file=./figure/30dis_30hight.eps,width=70mm}}
-    \caption{aaa}
+    \caption{Position error}
+\end{figure}
+\begin{figure}[H]
     \centerline{\epsfig{file=./figure/30dis_30hight_vector.eps,width=70mm}}
-    \caption{aaa}
+    \caption{Orientation variation}
 \end{figure}
 
 %これより得られた誤差データより分散共分散行列を算出する．
@@ -237,7 +211,7 @@ A variance covariance matrix is ​​calculated from the error data obtained fr
 The multivariate normal distribution of only the position is shown in figure 6.
 \begin{figure}[H]
     \centerline{\epsfig{file=./figure/fig13.eps,width=70mm}}
-    \caption{aaa}
+    \caption{Multivariate normal distribution}
 \end{figure}
 
 %ロボットの向きも加えた平均と分散共分散行列を式10,11に示す．
@@ -263,40 +237,37 @@ also added are shown in equations 10 and 11.
 \end{equation}
 
 \begin{equation}
-    \begin{split}
     R = 
-    \begin{bmatrix}
-        \sigma_{xx} &\sigma_{xy} &\sigma_{x\theta} \\
-        \sigma_{yx} &\sigma_{yy} &\sigma_{y\theta} \\
-        \sigma_{\theta x} &\sigma_{\theta y} &\sigma_{\theta\theta}
-    \end{bmatrix} \\
-    = 
     \begin{bmatrix}
         0.0000041093 & -0.0000001684 & -0.0000053749 \\
         -0.0000001684 & 0.0000058535 & 0.0000322863 \\
         -0.0000053749 & 0.0000322863 & 0.0003444646 
-    \end{bmatrix} 
-    \end{split}
+    \end{bmatrix}
     \label{eq:11} 
 \end{equation}
 
 \section{Simulation using Kalman filter}
-%先行研究より、我々の測位システムの位置と向きの分散共分散行列を算出した．(10と11)
-%これを用いてDual RTK-GNSSにおけるカルマンフィルタの優位性についてシミュレーションする．
+%先行研究より、我々の測位システムの位置と向きの分散共分散行列を算出した．
+%式(10),(11)用いてDual RTK-GNSSにおけるカルマンフィルタの優位性についてシミュレーションする．
 %シミュレーションに用いる各パラメータは表1に示す．
-%ロボットの左車輪は0.2m/s, 右車輪は0.3m/sの速度で反時計周りのシーケンス動作
-%車輪には路面状況を考慮して大中小のプロセスノイズを与える．
-%アイガモロボットの走行する路面はプロセスノイズ大を想定している．
-%車輪間距離0.35m, ロボットの制御0.01s/回(100Hz), GPSの更新0.2s/回(5Hz)
-%
-%
-%
+%ロボットは反時計周りのシーケンス制御をする．
+%路面状況を考慮して車輪には大中小のノイズを与える．
+%アイガモロボットの走行する路面は不整地の水田なのでノイズ大を想定している．
+
+From the previous experiment, the variance covariance matrix of the position and orientation 
+of our positioning system was calculated. We simulate the superiority of the Kalman filter 
+in Dual RTK-GNSS by using equations 10 and 11. The parameters used in the simulation 
+are shown in Table 1. The robot performs sequence control in the counterclockwise 
+direction. In consideration of the road surface condition, we give large, medium and small noise 
+to the wheels. Since the road surface on which the Aigamo robot runs is an irregular 
+rice field, it assumes a large noise.
+
 
 \begin{table}[H]
     \caption{Parameters for simulation}
     \label{table:table1}
     \centering
-    \begin{tabular}{ll}
+    \begin{tabular}{|l|l|}
         \hline
         Parameter & Value \\
         \hline \hline
@@ -309,39 +280,59 @@ also added are shown in equations 10 and 11.
     \end{tabular}
 \end{table}
 
-% \begin{table}[h]
-%     \caption{車輪外乱}
-%     \label{table:table2}
-%     \centering
-%     \begin{tabular}{ll}
-%         \hline
-%         外乱の大きさ & 分散共分散行列 \\
-%         \hline \hline
-%         small & 
-%         \begin{equation} 
-%             Q = 
-%             \begin{bmatrix}
-%             0.1^2 &0 \\
-%             0     &0.1^2 
-%             \end{bmatrix}
-%         \end{equation} \\
-%         %\hline
-%         %middle & \(0.2 [m/s]\) \\
-%         %large & \(0.3 [m/s]\) \\
-%        \hline
-%     \end{tabular}
-% \end{table}
+\newlength{\myheight}
+\setlength{\myheight}{1.2cm}
+
+\begin{table}[h]
+    \caption{Wheel noise}
+    \label{table:table2}
+    \centering
+    
+    \begin{tabular}{|l|l|}
+    \hline
+    Magnitude of noise & Convariance matrix \\
+    \hline \hline
+    \parbox[c][\myheight][c]{0cm}{} small & $ Q =  
+        \begin{bmatrix}
+            0.1^2 &0 \\
+            0     &0.1^2 \\ 
+        \end{bmatrix}
+        $ \\
+    \hline
+    \parbox[c][\myheight][c]{0cm}{} middle & $ Q =  
+    \begin{bmatrix}
+            0.3^2 &0 \\
+            0     &0.3^2 \\ 
+        \end{bmatrix}
+        $ \\
+    \hline
+    \parbox[c][\myheight][c]{0cm}{} large & $ Q =  
+        \begin{bmatrix}
+            1^2 &0 \\
+            0     &1^2 \\ 
+        \end{bmatrix}
+        $ \\
+    \hline
+    \end{tabular}
+\end{table}
 
 \subsection{Result}
-%車輪外乱大中小の時のシミュレーション結果をFiure 1~3にそれぞれ示した．
+%車輪外乱大中小の時のシミュレーション結果をFiure 1~3に示した．
 %
 %
-%
+
+The simulation results for large, medium and small wheels 
+disturbance are shown in Figure 7 to 9.
+
 \begin{figure}[H]
 \centerline{\epsfig{file=./figure/process_noise_S.eps,width=100mm}}
 \caption{Small process noise}
+\end{figure}
+\begin{figure}[H]
 \centerline{\epsfig{file=./figure/process_noise_M.eps,width=100mm}}
 \caption{Middle process noise}
+\end{figure}
+\begin{figure}[H]
 \centerline{\epsfig{file=./figure/process_noise_L.eps,width=100mm}}
 \caption{Large process noise}
 \end{figure}
@@ -377,7 +368,7 @@ A tracking robot based on wireless beacon
 H. J. Christopher and C. Eric:
 Evolution of the global navigation satellitesystem (gnss),
 {\it Proceedings of the IEEE}, Vol.96, No.12, pp.1902-1917, 2008.
-\bibitem{rtk-gps}
+\bibitem{rtk-gnss}
 K. Michio. N. Noboru, I. Kazunobu and T. Hideo: 
 Field Mobile Robot navigated by RTK-GPS and FOG, 
 {\it Journal of the Japanese Society of Agricultural Machinery}, Vol.63, No.5, pp.74-79, 2001.(in Japanese)

@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2018.2.27)  28 OCT 2018 05:12
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2018.2.27)  28 OCT 2018 16:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -119,7 +119,11 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box44
 \@float@everytoks=\toks22
 \@floatcapt=\box45
-) (./sss18.aux)
+) (./sss18.aux
+
+LaTeX Warning: Label `eq:8' multiply defined.
+
+)
 \openout1 = `sss18.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -157,9 +161,9 @@ File: ./figure/aigamo_robot_model.eps Graphic file (type eps)
 
 ]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 185.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 152.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 185.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 152.
 File: ./figure/fig1.eps Graphic file (type eps)
  <./figure/fig1.eps>
 File: ./figure/fig2.eps Graphic file (type eps)
@@ -167,7 +171,7 @@ File: ./figure/fig2.eps Graphic file (type eps)
 File: ./figure/30dis_30hight.eps Graphic file (type eps)
  <./figure/30dis_30hight.eps>
 File: ./figure/30dis_30hight_vector.eps Graphic file (type eps)
- <./figure/30dis_30hight_vector.eps>
+ <./figure/30dis_30hight_vector.eps> [2]
 Missing character: There is no ^^e2 in font cmr10!
 Missing character: There is no ^^80 in font cmr10!
 Missing character: There is no ^^8b in font cmr10!
@@ -175,42 +179,41 @@ Missing character: There is no ^^e2 in font cmr10!
 Missing character: There is no ^^80 in font cmr10!
 Missing character: There is no ^^8b in font cmr10!
 File: ./figure/fig13.eps Graphic file (type eps)
- <./figure/fig13.eps> [2]
-Overfull \hbox (1.55301pt too wide) in paragraph at lines 281--281
-[] 
+ <./figure/fig13.eps>
+Overfull \hbox (12.00087pt too wide) detected at line 247
+\OML/cmm/m/it/10 R \OT1/cmr/m/n/10 = []
  []
 
+\myheight=\skip46
 File: ./figure/process_noise_S.eps Graphic file (type eps)
 <./figure/process_noise_S.eps>
 File: ./figure/process_noise_M.eps Graphic file (type eps)
- <./figure/process_noise_M.eps>
+ <./figure/process_noise_M.eps> [3]
 File: ./figure/process_noise_L.eps Graphic file (type eps)
  <./figure/process_noise_L.eps>
-Overfull \vbox (37.96208pt too high) has occurred while \output is active []
-
- [3]
 
 LaTeX Font Warning: Font shape `JT1/mc/m/it' undefined
-(Font)              using `JT1/mc/m/n' instead on input line 367.
+(Font)              using `JT1/mc/m/n' instead on input line 358.
 
 
 LaTeX Font Warning: Font shape `JY1/mc/m/it' undefined
-(Font)              using `JY1/mc/m/n' instead on input line 367.
+(Font)              using `JY1/mc/m/n' instead on input line 358.
 
-[4
-
-] (./sss18.aux)
+[4] (./sss18.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 1388 strings out of 493653
- 17113 string characters out of 6148874
+ 1387 strings out of 493653
+ 17118 string characters out of 6148874
  90429 words of memory out of 5000000
- 4969 multiletter control sequences out of 15000+600000
+ 4968 multiletter control sequences out of 15000+600000
  14673 words of font info for 61 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  27i,21n,22p,303b,310s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on sss18.dvi (4 pages, 15576 bytes).
+Output written on sss18.dvi (4 pages, 18056 bytes).
