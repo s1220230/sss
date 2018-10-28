@@ -14,6 +14,7 @@
 \usepackage{epsfig} % for postscript graphics files
 \usepackage{amsmath}
 \usepackage{here}
+\usepackage{bm}
 
 \begin{document}
 \date{}
@@ -72,51 +73,52 @@ We verify our proposed method by Matlab.
     \caption{Robot model}
 \end{figure}
 
-\section{カルマンフィルタの説明}
-この章ではカルマンフィルタの説明を行う．アイガモロボットは２次元平面上を移動する．ロボットの中心座標を$(x,y)$, $x$軸となす角を$\theta$とする．ロボットの状態ベクトル$x$は式１と表現される．
+\section{Kalman filter}
+%この章ではカルマンフィルタの説明を行う．アイガモロボットは２次元平面上を移動する．ロボットの中心座標を$(x,y)$, $x$軸となす角を$\theta$とする．ロボットの状態ベクトル$x$は式１と表現される．
+In this chapter we will explain the Kalman filter. The aigamo robot moves on a two-dimensional plane. Let the center coordinates of the robot be $(x,y)$ and $\theta$ be the angle formed by the traveling direction of the robot and the $x$ axis. The state vector $x$ of the robot is expressed as Equation 1.
 \begin{equation}
-    x = \begin{bmatrix}
+    \bm{x} = \begin{bmatrix}
         x \\
         y \\
         \theta
         \end{bmatrix} 
 \end{equation}
-ロボットは左右の速度$v_{L}$,$v_{R}$によって制御され，制御ベクトル$u$は式２と表現される．
+%ロボットは左右の速度$v_{L}$,$v_{R}$によって制御され，制御ベクトル$u$は式２と表現される．
+The robot is controlled by the left and right speeds $v_{L}$ and $v_{R}$, and the control vector $u$ is expressed as Equation 2. 
 \begin{equation}
-    u = \begin{bmatrix}
+    \bm{u} = \begin{bmatrix}
         v_{L} \\
         v_{R} 
         \end{bmatrix} 
 \end{equation}
-%
-%
-カルマンフィルタの一般式からロボットの推定位置は式３のように表現される
+%カルマンフィルタの一般式からロボットの推定位置は式３のように表現される
+From the general equation of the Kalman filter, the estimated position of the robot is expressed as Equation 3.
 \begin{equation}
-    \hat{x}_{t} =F\hat{x}_{t-1} + Bu_{t} + w_{t}
+    \bm{\hat{x}}_{t} =F\bm{\hat{x}}_{t-1} + B\bm{u_{t}} + \bm{w_{t}}
 \end{equation}
 where, $F = \begin{bmatrix} 1 & 0 & 0 \\  0 & 1 & 0 \\  0 & 0 & 1 \end{bmatrix}$,
 $B = \begin{bmatrix} dt * cos\theta & 0 \\  dt * sin\theta & 0 \\ 0 & 1 \end{bmatrix}$, 
-$w$ is process noise.\\
-%
-%
-また，誤差共分散行列の更新は式４のように表現される
+$\bm{w}$ is process noise.\\
+%また，誤差共分散行列の更新は式４のように表現される
+Also, updating the error covariance matrix is ​​expressed as Equation 4.
 \begin{equation}
     P_{t} = F P_{t-1} F^{T} + Q
     \label{eq:4}
 \end{equation}
-ただし，Pは誤差共分散行列を表している. Qはプロセスの共分散行列で，\\ \\$Q = \begin{bmatrix} q_{x}^{2} & 0 & 0 \\  0 & q_{y}^{2} & 0 \\  0 & 0 & q_{\theta}^{2} \end{bmatrix}$\\ \\
-%
-%
-GPSよるロボットの位置$z$は式５のように表現される
+%ただし，Pは誤差共分散行列を表している. Qはプロセスの共分散行列で，\\ \\$Q = \begin{bmatrix} \sigma_{v_{L}}^{2} & 0 \\  0 & \sigma_{v_{R}}^{2} \\  \end{bmatrix}$\\ \\
+However, P represents the error covariance matrix, Q represents the covariance matrix of the process, and \\ \\$Q = \begin{bmatrix} \sigma_{v_{L}}^{2} & 0 \\  0 & \sigma_{v_{R}}^{2} \\  \end{bmatrix}$\\ \\
+%GPSよるロボットの位置$z$は式５のように表現される
+The position $z$ of the robot by GPS is expressed as Equation 5.
 \begin{equation}
-    z_{t} = Hx_{t} + v_{t}
+    \bm{z}_{t} = H\bm{x}_{t} + \bm{v}_{t}
     \label{eq:5}
 \end{equation}
 where，$H = \begin{bmatrix} 1 & 0 & 0 \\  0 & 1 & 0 \\  0 & 0 & 1 \end{bmatrix}$, 
-$v$ is observation noise. \\ \\
-カルマンフィルタの更新フェーズでは式6−10の式で観測誤差共分散行列$S$の更新，カルマンゲイン$K$の修正，推定状態量$\hat{x}$の更新を行う．
+$\bm{v}$ is observation noise. \\ \\
+%カルマンフィルタの更新フェーズでは式6−10の式で観測誤差共分散行列$S$の更新，カルマンゲイン$K$の修正，推定状態量$\bm{\hat{x}}$の更新を行う．
+In the update phase of the Kalman filter, update of the observation error covariance matrix $S$, correction of the Kalman gain $K$, and updating of the estimated state quantity $\bm{\hat{x}}$ are performed by the expression of Expression 6-10.
 \begin{equation}
-    y_{t} = z_{t} - H\hat{x}_{t}
+    \bm{y}_{t} = \bm{z}_{t} - H\bm{\hat{x}}_{t}
     \label{eq:6}
 \end{equation}
 %
@@ -131,18 +133,20 @@ $v$ is observation noise. \\ \\
 K_{t} = P_{t}H^{T}S_{t}^{-1}
     \label{eq:8}
 \end{equation}
+%
+%
 \begin{equation}
-    \hat{x}_{t} = \hat{x}_{t}+K_{t}y_{t}
+    \bm{\hat{x}}_{t} = \bm{\hat{x}}_{t}+K_{t}\bm{y}_{t}
     \label{eq:8}
 \end{equation}
-
+%
+%
 \begin{equation}
     P_{t} = (I-K_{t}H^{T})P_{t}(I-K_{t}H^{T})^{T} + K_{t}RK_{t}^{T}
     \label{eq:9}
 \end{equation}
-%
-ただし，Rは観測の共分散行列で，$R = \begin{bmatrix} x_{x}^{2} & 0 & 0 \\  0 & x_{y}^{2} & 0 \\  0 & 0 & x_{\theta}^{2} \end{bmatrix}$\\
-
+%ただし，Rは観測の共分散行列で，\\ \\ $R = \begin{bmatrix} \sigma_{xx} & \sigma_{xy} & \sigma_{x\theta} \\  \sigma_{yx} & \sigma_{y}^{2} & \sigma_{y\theta} \\  \sigma_{\theta x} & \sigma_{\theta y} & \sigma_{\theta}^{2} \end{bmatrix}$\\
+However, R is the observation covariance matrix, \\ \\ $R = \begin{bmatrix} \sigma_{xx} & \sigma_{xy} & \sigma_{x\theta} \\  \sigma_{yx} & \sigma_{y}^{2} & \sigma_{y\theta} \\  \sigma_{\theta x} & \sigma_{\theta y} & \sigma_{\theta}^{2} \end{bmatrix}$\\
 
 
 \section{Pre experiments}
@@ -159,11 +163,11 @@ We investigated the error distribution used for the Kalman filter in the previou
 RTK-GNSS requires at least GNSS modules, base station and rover. 
 In this experiment, we use one Reach RS\cite{reach rs} from Emlid as a base station 
 and two Reach\cite{reach} from Emlid as a rover.
-As shown in Figure 2, the base station is installed at a position of 1.5m above the ground 
+As shown in Figure 2, the base station is installed at a position of 150 [cm] above the ground 
 with a quaint triangle with a clear view.
-Rover uses an experimental apparatus as shown in Figure 3. 
+Rover uses an experimental device as shown in Figure 3. 
 Under the antennas of the base station and the mobile station, 
-an aluminum plate of 10 cm x 10 cm is laid down to prevent multipass from the ground.
+an aluminum plate of 10 [cm] $\times$ 10 [cm] is laid down to prevent multipass from the ground.
 
 \begin{figure}[H]
     \centerline{\epsfig{file=./figure/fig1.eps,width=50mm,angle=-90}}
@@ -171,7 +175,7 @@ an aluminum plate of 10 cm x 10 cm is laid down to prevent multipass from the gr
 \end{figure}
 \begin{figure}[H]
     \centerline{\epsfig{file=./figure/fig2.eps,width=50mm}}
-    \caption{Rover}
+    \caption{Experimental device}
 \end{figure}
 
 \subsection{Investigation method}
@@ -194,7 +198,7 @@ Each data set acquires 8 azimuths at a frequency of 5 Hz (100 data) in increment
 
 \subsection{Result}
 %一番実環境に近い(ⅱ)の結果を図4と5に示す．
-Figures 4 and 5 show the results of (ii) which is closest to the real environment.
+Figures 4 and 5 show the results of (ii) which is closest to our robot.
 
 \begin{figure}[H]
     \centerline{\epsfig{file=./figure/30dis_30hight.eps,width=70mm}}
@@ -216,7 +220,7 @@ The multivariate normal distribution of only the position is shown in figure 6.
 
 %ロボットの向きも加えた平均と分散共分散行列を式10,11に示す．
 The mean and variance covariance matrix with the orientation of the robot 
-also added are shown in equations 10 and 11.
+also added are shown in equations 11 and 12.
 
 \begin{equation}
     \begin{split}
@@ -233,7 +237,7 @@ also added are shown in equations 10 and 11.
         -0.0287904375
      \end{bmatrix}
     \end{split}
-    \label{eq:10} 
+    \label{eq:11} 
 \end{equation}
 
 \begin{equation}
@@ -243,7 +247,7 @@ also added are shown in equations 10 and 11.
         -0.0000001684 & 0.0000058535 & 0.0000322863 \\
         -0.0000053749 & 0.0000322863 & 0.0003444646 
     \end{bmatrix}
-    \label{eq:11} 
+    \label{eq:12} 
 \end{equation}
 
 \section{Simulation using Kalman filter}
@@ -257,8 +261,8 @@ also added are shown in equations 10 and 11.
 From the previous experiment, the variance covariance matrix of the position and orientation 
 of our positioning system was calculated. We simulate the superiority of the Kalman filter 
 in Dual RTK-GNSS by using equations 10 and 11. The parameters used in the simulation 
-are shown in Table 1. The robot performs sequence control in the counterclockwise 
-direction. In consideration of the road surface condition, we give large, medium and small noise 
+are shown in Table 1. The robot performs sequence control in the CCW 
+direction. In consideration of the road surface condition, we give small, medium and large noise 
 to the wheels. Since the road surface on which the Aigamo robot runs is an irregular 
 rice field, it assumes a large noise.
 
@@ -316,40 +320,67 @@ rice field, it assumes a large noise.
     \end{tabular}
 \end{table}
 
-\subsection{Result}
+\subsection{Result and Discussion}
 %車輪外乱大中小の時のシミュレーション結果をFiure 1~3に示した．
-%
-%
+%（車輪の外乱が大きいとロボットの軌跡も大きくずれながらも見当違いな動きはなし。）
+%小と中のノイズのとき、カルマンフィルタによる推定自己位置が中盤大きく振動しながらずれる。
+%この中盤のずれは原因がわからない。
+%一方、大のノイズの時、カルマンフィルタによる推定自己位置は中盤でもずれない。
+%小中大のノイズの時のGNSSの観測値の精度はかなり良かった。
+%実ロボットの位置より大部分が右下にずれているが、これは事前実験における位置の誤差の分布が右下に偏っていたため。
+%カルマンフィルタはGNSSの観測値に大きく寄る結果となった。
+%これは事前実験における誤差の分散がかなり小さかったため、観測値がより信頼されたためである。
 
-The simulation results for large, medium and small wheels 
-disturbance are shown in Figure 7 to 9.
+The simulation results for small, medium and large wheels 
+disturbance are shown in Figure 7-9.
+
+When the noise is small and medium, the estimated self-position by the Kalman 
+filter deviates largely while oscillating in the middle stage. The cause of 
+this middle misalignment has not been elucidated. 
+On the other hand, when the noise is large, the estimated self-position 
+by the Kalman filter does not shift even in the middle stage. 
+The precision of the observation value of GNSS at small, medium and large noise 
+was quite high. Most of the observed values ​​of GNSS deviate to the lower right 
+of the position of the real robot. This is because the position error distribution 
+in the previous experiment was biased toward the lower right. 
+The Kalman filter was greatly affected by the observation value of GNSS. 
+This is because the variance of the error in the preliminary experiment was 
+rather small and the observation was more reliable.
 
 \begin{figure}[H]
-\centerline{\epsfig{file=./figure/process_noise_S.eps,width=100mm}}
+\centerline{\epsfig{file=./figure/process_noise_S.eps,width=70mm}}
 \caption{Small process noise}
 \end{figure}
 \begin{figure}[H]
-\centerline{\epsfig{file=./figure/process_noise_M.eps,width=100mm}}
+\centerline{\epsfig{file=./figure/process_noise_M.eps,width=70mm}}
 \caption{Middle process noise}
 \end{figure}
 \begin{figure}[H]
-\centerline{\epsfig{file=./figure/process_noise_L.eps,width=100mm}}
+\centerline{\epsfig{file=./figure/process_noise_L.eps,width=70mm}}
 \caption{Large process noise}
 \end{figure}
-\subsection{Disucussion}
-%
-%
-%
-%
-%
 
 \section{Conclusions}
-%
-%
-%
-%
-%
-%
+%事前実験で取得した誤差データを用いたシミュレーションは、GNSSモジュールの精度が良かった。
+%今回使用した誤差データは静止体を用いたが、実ロボットは移動体であるため観測値の精度は下がることが予想される．
+%もし誤差の分布が日時や場所によってかわるのであれば、
+%キャリブレーションの時間を設けて観測値にオフセットをかけることで
+%さらに自己位置推定の精度が上がると思う．
+%小と中のノイズのとき、カルマンフィルタによる推定自己位置が中盤大きく振動しながらずれたが、
+%この原因解明が今後の課題である。
+%つかれたああああああ
+%おわりぃぃぃぃぃぃぃ
+
+In the simulation using error data acquired in previous experiments, 
+the accuracy of the GNSS module was quiet high. Although the stationary body 
+was used for the error data used in this study, it is expected that the accuracy 
+of the observation value will decrease because the real robot is a moving object. 
+If the error distribution varies depending on the date and time and location, 
+we think that the accuracy of self position estimation will be further improved 
+by setting the time for calibration and applying an offset to the observation value. 
+In the case of small and medium noise, the future task is to elucidate the reason 
+why the estimated self-position by the Kalman filter shifts while oscillating large 
+in the middle stage.
 
 \begin{thebibliography}{99}
 \bibitem{aigamo}

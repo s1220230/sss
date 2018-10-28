@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2018.2.27)  28 OCT 2018 16:37
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2018.2.27)  28 OCT 2018 20:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -119,6 +119,14 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box44
 \@float@everytoks=\toks22
 \@floatcapt=\box45
+) (/usr/local/texlive/2017/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup5
+\symboldletters=\mathgroup6
+\symboldsymbols=\mathgroup7
+\symboldlasy=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 207.
 ) (./sss18.aux
 
 LaTeX Warning: Label `eq:8' multiply defined.
@@ -126,44 +134,59 @@ LaTeX Warning: Label `eq:8' multiply defined.
 )
 \openout1 = `sss18.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <17> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 30.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 31.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <17> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 30.
-LaTeX Font Info:    Try loading font information for U+lasy on input line 30.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 31.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 31.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 31.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 31.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 33.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 34.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 33.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 34.
 File: ./figure/aigamo_robot_model.eps Graphic file (type eps)
- <./figure/aigamo_robot_model.eps> [1
+ <./figure/aigamo_robot_model.eps>
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 78.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 78.
+Missing character: There is no ^^e2 in font cmr10!
+Missing character: There is no ^^80 in font cmr10!
+Missing character: There is no ^^8b in font cmr10!
+Missing character: There is no ^^e2 in font cmr10!
+Missing character: There is no ^^80 in font cmr10!
+Missing character: There is no ^^8b in font cmr10!
+ [1
 
 
 
 ]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 152.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 156.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 152.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 156.
 File: ./figure/fig1.eps Graphic file (type eps)
  <./figure/fig1.eps>
 File: ./figure/fig2.eps Graphic file (type eps)
@@ -180,24 +203,31 @@ Missing character: There is no ^^80 in font cmr10!
 Missing character: There is no ^^8b in font cmr10!
 File: ./figure/fig13.eps Graphic file (type eps)
  <./figure/fig13.eps>
-Overfull \hbox (12.00087pt too wide) detected at line 247
+Overfull \hbox (12.00087pt too wide) detected at line 251
 \OML/cmm/m/it/10 R \OT1/cmr/m/n/10 = []
  []
 
 \myheight=\skip46
+Missing character: There is no ^^e2 in font cmr10!
+Missing character: There is no ^^80 in font cmr10!
+Missing character: There is no ^^8b in font cmr10!
+Missing character: There is no ^^e2 in font cmr10!
+Missing character: There is no ^^80 in font cmr10!
+Missing character: There is no ^^8b in font cmr10!
+[3]
 File: ./figure/process_noise_S.eps Graphic file (type eps)
-<./figure/process_noise_S.eps>
+ <./figure/process_noise_S.eps>
 File: ./figure/process_noise_M.eps Graphic file (type eps)
- <./figure/process_noise_M.eps> [3]
+ <./figure/process_noise_M.eps>
 File: ./figure/process_noise_L.eps Graphic file (type eps)
  <./figure/process_noise_L.eps>
 
 LaTeX Font Warning: Font shape `JT1/mc/m/it' undefined
-(Font)              using `JT1/mc/m/n' instead on input line 358.
+(Font)              using `JT1/mc/m/n' instead on input line 389.
 
 
 LaTeX Font Warning: Font shape `JY1/mc/m/it' undefined
-(Font)              using `JY1/mc/m/n' instead on input line 358.
+(Font)              using `JY1/mc/m/n' instead on input line 389.
 
 [4] (./sss18.aux)
 
@@ -208,12 +238,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 1387 strings out of 493653
- 17118 string characters out of 6148874
- 90429 words of memory out of 5000000
- 4968 multiletter control sequences out of 15000+600000
- 14673 words of font info for 61 fonts, out of 8000000 for 9000
+ 1492 strings out of 493653
+ 18295 string characters out of 6148874
+ 90640 words of memory out of 5000000
+ 5054 multiletter control sequences out of 15000+600000
+ 19796 words of font info for 79 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 27i,21n,22p,303b,310s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 27i,21n,22p,370b,308s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on sss18.dvi (4 pages, 18056 bytes).
+Output written on sss18.dvi (4 pages, 20416 bytes).
